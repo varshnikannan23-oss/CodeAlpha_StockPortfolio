@@ -1,42 +1,82 @@
-# 📈 Stock Portfolio Tracker
+# Stock Portfolio Tracker
+# CodeAlpha Internship - Task 2
 
-A beginner-friendly Python application that allows users to track their stock investments and calculate the total value of their portfolio.
+stocks = {
+    "AAPL": 180,
+    "TSLA": 250,
+    "GOOGL": 140,
+    "MSFT": 420,
+    "AMZN": 190
+}
 
-## 🚀 Features
+total_investment = 0
+portfolio = []
 
-- 📊 Track multiple stocks
-- 💰 Calculate investment value automatically
-- 🔍 Validate stock names
-- 📦 Store portfolio details
-- 📄 Save portfolio results to a text file
-- 🔄 Interactive command-line interface
+print("================================")
+print("     STOCK PORTFOLIO TRACKER")
+print("================================")
 
-## 🛠️ Technologies Used
+while True:
 
-- Python
-- Dictionaries
-- Lists
-- Loops
-- Conditional Statements
-- File Handling
-- User Input
+    stock_name = input("\nEnter stock name (or 'done' to finish): ").upper()
 
-## 📋 Available Stocks
+    if stock_name == "DONE":
+        break
 
-| Stock | Price |
-|-------|------:|
-| AAPL  | $180 |
-| TSLA  | $250 |
-| GOOGL | $140 |
-| MSFT  | $420 |
-| AMZN  | $190 |
+    if stock_name in stocks:
 
-## ▶️ How to Run
+        quantity = int(input("Enter quantity: "))
 
-1. Make sure Python is installed.
-2. Download or clone this repository.
-3. Open the project folder.
-4. Run:
+        price = stocks[stock_name]
+        investment = price * quantity
 
-```bash
-python StockPortfolio.py
+        portfolio.append({
+            "stock": stock_name,
+            "quantity": quantity,
+            "price": price,
+            "investment": investment
+        })
+
+        total_investment += investment
+
+        print("Stock Price:", price)
+        print("Investment:", investment)
+
+    else:
+        print("Stock not found.")
+        print("Available stocks:", ", ".join(stocks.keys()))
+
+
+print("\n================================")
+print("          PORTFOLIO")
+print("================================")
+
+for item in portfolio:
+    print(
+        item["stock"],
+        "- Quantity:", item["quantity"],
+        "- Price:", item["price"],
+        "- Investment:", item["investment"]
+    )
+
+print("\nTotal Portfolio Investment:", total_investment)
+
+# Save result to a text file
+with open("portfolio.txt", "w") as file:
+
+    file.write("STOCK PORTFOLIO TRACKER\n")
+    file.write("=======================\n\n")
+
+    for item in portfolio:
+        file.write(
+            f"Stock: {item['stock']}\n"
+            f"Quantity: {item['quantity']}\n"
+            f"Price: {item['price']}\n"
+            f"Investment: {item['investment']}\n\n"
+        )
+
+    file.write(
+        f"Total Portfolio Investment: {total_investment}\n"
+    )
+
+print("\nPortfolio saved to portfolio.txt")
